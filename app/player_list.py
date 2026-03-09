@@ -28,3 +28,13 @@ class PlayerList:
     @property
     def tail(self) -> PlayerNode:
         return self._tail
+
+    def insert_tail(self, player_node: PlayerNode) -> None:
+        if self.is_empty:
+            self._head = player_node
+            self._tail = player_node
+        else:
+            self._tail.next = player_node
+            player_node.previous = self._tail
+            self._tail = player_node
+
