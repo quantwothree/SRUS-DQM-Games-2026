@@ -3,6 +3,7 @@ from app.player_node import PlayerNode
 class PlayerList:
     def __init__(self) -> None:
         self._head = None
+        self._tail = None
 
     @property
     def is_empty(self) -> bool:
@@ -14,6 +15,7 @@ class PlayerList:
     def insert_head(self, player_node: PlayerNode) -> None:
         if self.is_empty:
             self._head = player_node
+            self._tail = player_node
         else:
             player_node.next = self._head
             self._head.previous = player_node
@@ -23,3 +25,6 @@ class PlayerList:
     def head(self) -> PlayerNode:
         return self._head
 
+    @property
+    def tail(self) -> PlayerNode:
+        return self._tail

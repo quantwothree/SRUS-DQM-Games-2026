@@ -25,6 +25,9 @@ class TestPlayerList(unittest.TestCase):
         self.assertIsNone(player_list.head.previous)
         self.assertIsNone(player_list.head.next)
 
+        # And also tail should be the same as head
+        self.assertEqual(player_list.tail.key, player_list.head.key)
+
     def test_insert_head_with_not_empty_list(self):
         # Create the Player List
         player_list = PlayerList()
@@ -55,6 +58,9 @@ class TestPlayerList(unittest.TestCase):
 
         # And nothing should be in front of head
         self.assertIsNone(player_list.head.previous)
+
+        # Also tail should be Node 1 with key is 01
+        self.assertEqual(player_list.tail.key, "01")
 
     if __name__ == "__main__":
         unittest.main()
