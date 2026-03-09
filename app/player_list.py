@@ -1,4 +1,5 @@
 from app.player_node import PlayerNode
+from app.player import Player
 
 class PlayerList:
     def __init__(self) -> None:
@@ -90,3 +91,41 @@ class PlayerList:
                     else:
                         current_node = current_node.next
                 raise IndexError("Key does not exist in list")
+
+    def display(self, forward= True) -> None:
+        count = 1
+        if forward:
+            current = self.head
+            while current:
+                print(f"{count}. {current.player}")
+                current = current.next
+                count += 1
+        elif not forward:
+            current = self.tail
+            while current:
+                print(f"{count}. {current.player}")
+                current = current.previous
+                count += 1
+
+
+# For testing display()
+# player_list = PlayerList()
+#
+# player1 = Player("01", "Alice")
+# player2 = Player("02", "Bob")
+# player3 = Player("03", "Carl")
+#
+# node1 = PlayerNode(player1)
+# node2 = PlayerNode(player2)
+# node3 = PlayerNode(player3)
+#
+# player_list.insert_head(node1)
+# player_list.insert_head(node2)
+# player_list.insert_head(node3)
+#
+# print('Forward')
+# player_list.display(True)
+# print('Backward')
+# player_list.display(False)
+
+

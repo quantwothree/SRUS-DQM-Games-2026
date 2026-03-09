@@ -1,5 +1,3 @@
-from collections.abc import set_iterator
-
 from app.player import Player
 
 class PlayerNode:
