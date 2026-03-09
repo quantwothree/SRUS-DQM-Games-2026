@@ -117,5 +117,61 @@ class TestPlayerList(unittest.TestCase):
         self.assertIsNone(player_list.head.previous)
         self.assertIsNone(player_list.tail.next)
 
+    def test_delete_at_head_with_empty_list(self):
+        player_list = PlayerList()
+        self.assertTrue(player_list.is_empty)
+
+        with self.assertRaises(IndexError) as error:
+            player_list.delete_at_head()
+        self.assertEqual(type(error.exception), IndexError)
+
+    def test_delete_at_head_with_not_empty_list(self):
+        player_list = PlayerList()
+
+        # Add 2 nodes to the list
+        player1 = Player("01", "Alice")
+        player2 = Player("02", "Bob")
+
+        node1 = PlayerNode(player1)
+        node2 = PlayerNode(player2)
+
+        player_list.insert_head(node1)
+        player_list.insert_head(node2)
+
+        # Test if delete at tail works
+        player_list.delete_at_head()
+
+        self.assertEqual(player_list.head.key, "01")
+        self.assertIsNone(player_list.head.previous)
+        self.assertIsNone(player_list.head.next)
+
+    def test_delete_at_tail_with_empty_list(self):
+        player_list = PlayerList()
+        self.assertTrue(player_list.is_empty)
+
+        with self.assertRaises(IndexError) as error:
+            player_list.delete_at_tail()
+        self.assertEqual(type(error.exception), IndexError)
+
+    def test_delete_at_tail_with_not_empty_list(self):
+        player_list = PlayerList()
+
+        # Add 2 nodes to the list
+        player1 = Player("01", "Alice")
+        player2 = Player("02", "Bob")
+
+        node1 = PlayerNode(player1)
+        node2 = PlayerNode(player2)
+
+        player_list.insert_head(node1)
+        player_list.insert_head(node2)
+
+        # Test if delete at tail works
+        player_list.delete_at_tail()
+
+        self.assertEqual(player_list.tail.player.uid, "02")
+        self.assertIsNone(player_list.tail.previous)
+        self.assertIsNone(player_list.tail.next)
+
 if __name__ == "__main__":
     unittest.main()

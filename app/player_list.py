@@ -38,3 +38,24 @@ class PlayerList:
             player_node.previous = self._tail
             self._tail = player_node
 
+    def delete_at_head(self) -> None:
+        if self.is_empty:
+            raise IndexError("List is empty, nothing to delete")
+        # If list only has 1 node
+        elif self._head == self._tail:
+            self._head = None
+            self._tail = None
+        else:
+            self._head = self.head.next
+            self.head.previous = None
+
+    def delete_at_tail(self) -> None:
+        if self.is_empty:
+            raise IndexError("List is empty, nothing to delete")
+        # If list only has 1 node
+        elif self.head == self.tail:
+            self._head = None
+            self._tail = None
+        else:
+            self._tail = self.tail.previous
+            self.tail.next = None
