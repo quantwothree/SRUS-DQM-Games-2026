@@ -173,5 +173,76 @@ class TestPlayerList(unittest.TestCase):
         self.assertIsNone(player_list.tail.previous)
         self.assertIsNone(player_list.tail.next)
 
+    def test_delete_at_key_with_empty_list(self):
+        player_list = PlayerList()
+        self.assertTrue(player_list.is_empty)
+
+        with self.assertRaises(IndexError) as error:
+            player_list.delete_at_key("01")
+        self.assertEqual(type(error.exception), IndexError)
+
+    def test_delete_at_key_with_key_is_head_or_tail(self):
+        player_list = PlayerList()
+
+        # Add 4 nodes
+        player1 = Player("01", "Alice")
+        player2 = Player("02", "Bob")
+        player3 = Player("03", "Carl")
+        player4 = Player("04", "Dean")
+
+        node1 = PlayerNode(player1)
+        node2 = PlayerNode(player2)
+        node3 = PlayerNode(player3)
+        node4 = PlayerNode(player4)
+
+        player_list.insert_head(node1)
+        player_list.insert_head(node2)
+        player_list.insert_head(node3)
+        player_list.insert_head(node4)
+
+        player_list.delete_at_key("01")
+        player_list.delete_at_key("04")
+
+        # Check if head and tail updated correctly - The list key's order is 4 3 2 1
+        self.assertEqual(player_list.head.key, "03")
+        self.assertEqual(player_list.tail.key, "02")
+
+    def test_delete_at_key_with_1_node(self):
+        player_list = PlayerList()
+        player1 = Player("01", "Alice")
+        node1 = PlayerNode(player1)
+        player_list.insert_head(node1)
+
+        player_list.delete_at_key("01")
+        self.assertTrue(player_list.is_empty)
+
+    def test_delete_at_key_with_not_empty_list(self):
+        player_list = PlayerList()
+
+        # Add 4 nodes
+        player1 = Player("01", "Alice")
+        player2 = Player("02", "Bob")
+        player3 = Player("03", "Carl")
+        player4 = Player("04", "Dean")
+
+        node1 = PlayerNode(player1)
+        node2 = PlayerNode(player2)
+        node3 = PlayerNode(player3)
+        node4 = PlayerNode(player4)
+
+        player_list.insert_head(node1)
+        player_list.insert_head(node2)
+        player_list.insert_head(node3)
+        player_list.insert_head(node4)
+
+        # Test delete with an invalid key
+        with self.assertRaises(IndexError) as error:
+            player_list.delete_at_key("05")
+        self.assertEqual(type(error.exception), IndexError)
+
+        # Test delete with a valid key - The list key's order is 4 3 2 1
+        player_list.delete_at_key("03")
+        self.assertEqual(player_list.head.next.key, "02")
+
 if __name__ == "__main__":
     unittest.main()

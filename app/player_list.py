@@ -59,3 +59,34 @@ class PlayerList:
         else:
             self._tail = self.tail.previous
             self.tail.next = None
+
+    def delete_at_key(self, key_to_delete) -> None:
+        if self.is_empty:
+            raise IndexError("List is empty, nothing to delete")
+        # If list has 1 node
+        elif self.head == self.tail:
+            # And key to delete is head/tail
+            if self.head.key == key_to_delete:
+                self.delete_at_head()
+                return
+            # The key to delete is not head /tail
+            else:
+                raise IndexError("Key does not exist in list")
+        else:
+            # Loop to find they node with that key
+            if self.head.key == key_to_delete:
+                self.delete_at_head()
+                return
+            if self.tail.key == key_to_delete:
+                self.delete_at_tail()
+                return
+            else:
+                current_node = self.head.next
+                while current_node:
+                    if current_node.key == key_to_delete:
+                        current_node.previous.next = current_node.next
+                        current_node.next.previous = current_node.previous
+                        return
+                    else:
+                        current_node = current_node.next
+                raise IndexError("Key does not exist in list")
