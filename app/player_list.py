@@ -107,6 +107,36 @@ class PlayerList:
                 current = current.previous
                 count += 1
 
+    # Use to find if uid is in PlayerList (use in hashmap)
+    def __contains__(self, uid: str) -> bool:
+        current_node = self.head
+        while current_node:
+            if current_node.key != uid:
+                current_node = current_node.next
+            else:
+                return True
+        # If can not find the node with given uid
+        return False
+
+    # Use to get the Player from a PlayerList in hashmap
+    def get_player_at_key(self, uid: str) -> Player | None:
+        current_node = self.head
+        while current_node:
+            if current_node.key != uid:
+                current_node = current_node.next
+            else:
+                return current_node.player
+        return None
+
+    # Use to find the number of Player/PlayerNode in PlayerList
+    def __len__(self) -> int:
+        current_node = self._head
+        counter = 0
+        while current_node:
+            counter += 1
+            current_node = current_node.next
+        return counter
+
 
 # For testing display()
 # player_list = PlayerList()
