@@ -28,3 +28,6 @@ class Player:
     @name.setter
     def name(self, new_name: str) -> None:
         self._player_name = new_name
+
+    def __eq__(self, other):
+        return self.uid == other.uid
