@@ -113,9 +113,46 @@ According to Pearson Hashing on Wikipedia (https://en.wikipedia.org/wiki/Pearson
 
 Accoding to Daniel Lemire at ScienceDirect (https://www.sciencedirect.com/science/article/pii/S0166218X11004276?): 
 
+"We pick the initial value uniformly at random. Thus, Pearson is uniform"
 
+Moreover, if we set the randomness of the table to a fixed value (achieved by random.seed(42) in the example code) we can expect the same outputs for the same inputs, because the final hash results depend on this table, meaning that it is deterministic. 
 
+Stated in "Pearson hashing vs JH" on SSOJet.com (https://ssojet.com/compare-hashing-algorithms/pearson-hashing-vs-jh/#implementing-pearson-hashing-for-data-integrity):
 
+"it's crucial to remember that Pearson hashing is not collision-resistant" and "Different data sequences can yield the same hash value, rendering it inappropriate for security-critical tasks like password protection or verifying authenticity"
+
+Pearson Hash has moderate sensitivity to input changes given if the changes happen early in the string sequence. This is because every subsequent character's hash value depends on the one comes before it. But because it is designed for 8-bit registers, so the output is 8-bits -> the maximum change is small. 
+
+Built-in hash
+
+Within the official Python docs at: https://docs.python.org/3/reference/datamodel.html it was stated that " By default, the __hash__() values of str and bytes objects are “salted” with an unpredictable random value. Although they remain constant within an individual Python process, they are not predictable between repeated invocations of Python." 
+
+This translates to the built-in hash function should be deterministic within the same Python session but not for different, seperate Python sessions. 
+(to prevent DoS attacks) 
+
+According to PEP456, Python 3.4 uses SipHash for its default hash function (https://peps.python.org/pep-0456/?) and "SipHash is a family of pseudorandom functions (a.k.a. keyed hash functions) optimized for speed on short messages. Target applications include network traffic authentication and defense against hash-flooding DoS attacks." which suggests that it is secure and efficient. 
+
+Uniformity wise, I can't find any sources that discuss on the matter but we can infer that its distribution is effectively uniform because it is a cryptographic pseudorandom function. And "If a function from the family is selected by choosing an index value uniformly at random, and one’s knowledge of the selected function is limited to the output values corresponding to a feasible number of (adaptively) chosen input values, then the selected function is computationally indistinguishable from a function whose outputs were fixed uniformly at random." - according to https://csrc.nist.gov/glossary/term/pseudorandom_function
+
+But noted that by performing a modulo to the hash value would skew the uniformity slightly. 
+
+SHA256 
+
+According to SHA-256 Unmasked: Deciphering Cryptographic Hash Functions from NetworkEncyclopedia (https://networkencyclopedia.com/sha-256-unmasked-deciphering-cryptographic-hash-functions/?):
+
+"SHA-256 is deterministic, meaning that it produces the same hash output for the same input, no matter how many times the operation is repeated"
+
+ And for sensitivity to input changes, it is noted that:
+
+"Closely related to determinism is the avalanche effect, a property that ensures even a minuscule change in input creates a significant, cascading effect on the output."
+
+While in regards to security and collision resistance: ". Its preimage resistance ensures that it’s computationally infeasible to reverse-engineer the input from its hash output, safeguarding the original data", "its collision resistance protects against the possibility of finding two distinct inputs that hash to the same output, further buttressing its role in data integrity and authentication." 
+
+However the article critiques the limitation of SHA256 when it comes to Efficiency:
+
+ "The most significant critique levied against SHA-256 resides in the realm of computational efficiency, particularly with large data sets. SHA-256, by virtue of being a member of the SHA-2 family, follows a Merkle–Damgård structure. This structure requires the entire message to be processed for the hash computation. As data size grows, so does the time and computational resources needed to generate the hash. In an era where data is a ceaselessly flowing river, this time complexity becomes a noticeable limitation, particularly for systems that are either processing large volumes of data or are limited in computational resources."
+
+ Since SHA256 is a Cryptographic hash function, it is believed that "The digests produced by a CHF should be distributed uniformly and should look random. The aim is to ensure the output leaks no information about the input." according to https://eu-de.quantum.cloud.ibm.com/learning/en/courses/quantum-safe-cryptography/cryptographic-hash-functions
 
 
 
