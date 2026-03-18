@@ -5,15 +5,16 @@ from app.player_node import PlayerNode
 class HashMap:
     def __init__(self, size: int) -> None:
         self.size = size
-        self.hashmap = {}
+        self.hashmap = []
         for i in range(self.size):
-            self.hashmap[i] = PlayerList()
+            self.hashmap.append(PlayerList())
 
     def get_index(self, key: str | Player) -> int:
         if isinstance(key, Player):
             return hash(key) % self.size
         else:
-            return Player.djb2(key) % self.size
+            temp_player = Player(key, "")
+            return hash(temp_player) % self.size
 
     def __setitem__(self, key: str | Player, name: str) -> None:
         if isinstance(key, str):
