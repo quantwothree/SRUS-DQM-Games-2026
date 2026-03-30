@@ -97,7 +97,17 @@ def test_sort_players(self):
 What was the outcome of running the above unit test, copy paste the output **for just this particular test** below:
 
 ```text
-Copy the traceback you got when you ran the test here.
+Ran 3 tests in 0.023s
+
+FAILED (errors=1)
+
+Error
+Traceback (most recent call last):
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\tests\player_test.py", line 17, in test_sort_players
+    sorted_players = sorted(players)
+                     ^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'Player' and 'Player'
+
 ```
 
 ### 4.3. Success criteria
@@ -115,7 +125,7 @@ What is the **only** magic method that must be implemented in the player class f
 **Hint:** if you don't recall this from class, the error message you got when you ran the test will help you.
 -------
 > Answer Here
-> Yes, here - instead of this text!
+> The magic method is dunder lt eg __lt__
 -------
 #### 4.3.2. Task: Implement the magic method in the Player class
 
@@ -136,7 +146,11 @@ def test_players_can_be_compared_by_score(self):
 Run the test and confirm that your error resembles the previous error
 
 ```text
-INSERT ERROR OUTPUT HERE
+Error
+Traceback (most recent call last):
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\tests\player_test.py", line 29, in test_players_can_be_compared_by_score
+    self.assertLess(bob, alice)
+TypeError: '<' not supported between instances of 'Player' and 'Player'
 ```
 
 - Implement the appropriate magic method in the Player class and ensure you pass this test
@@ -157,14 +171,30 @@ INSERT ERROR OUTPUT HERE
 Rerun `test_sort_players` does the test pass? If not, include the output below:
 
 ```text
-Your output here
+THE TEST PASSED
 ```
 
 ##### 4.3.4.1 Question: why did the equality comparison fail?
 Why did the test fail (note: if it doesn't fail, it means there is something you have already done before you were asked to do so - if that's the case, you need to figure out what that is!)?
 -------
 > Answer here
->
+> The test did not fail because I have already implemented __eq__ in Player class. Which I used for the last portfolio task (task 2). I was using it to compare players by using their uid. 
+
+So when we run test_sort_players():
+
+Firstly 
+    sorted_players = sorted(players)
+This ran fine because it used the implemented __lt__ 
+
+And then when we get to  
+    self.assertListEqual(sorted_players, manually_sorted_players)
+
+We now have 2 lists of Players already sorted by SCORE 
+self.assertListEqual calls the __eq__ of Player class to check if each individual Player in those 2 lists are equal 
+
+Which in this case, the UID was used to compare instead of SCORE. 
+
+That's why this test did not FAIL. 
 -------
 Add the necessary code to the Player class to ensure that the `test_sort_players` test passes.
 
