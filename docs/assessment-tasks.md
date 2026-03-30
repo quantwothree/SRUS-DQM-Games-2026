@@ -236,7 +236,34 @@ def sort_quickly(arr):
 
 What is the expected time and space complexity of the above algorithm? You can answer using big O or in plain English but in both cases you MUST justify your answer.
 
-> Answer here
+> For the sorting algorithm provided, with the best case scenario when we have the array roughly devided in half for eaach recursion, we have:
+
+Work per level is n 
+Number of levels roughly cuts in half after each level: 
+
+(n/2) -> (n/4) -> (n/8) ... this can be written as n / (2 ^ x) 
+
+So on until we reach 1
+
+Now we need to find out at which x that we reach level 1.
+
+So we solve for x:
+    n / (2^x) = 1 
+
+    => x = log2 n 
+
+Since we ignore small numbers in big O -> log2n = logn 
+Now we have: n (work per level) times logn (number of levels) 
+
+-> O(n log n) 
+
+With the worst case scenario when the pivot is always at index 0, meaning each recursion we can only eliminate 1 item in the array, we have:
+
+Total work requires is n + (n-1) + (n-2) + (n=3) + ... + 1 
+
+Which simplifies to n + n + n + n for n times (eg. n times n or n^2) 
+
+-> O (n^2) 
 
 ### 5.2. Task: Implement the custom sorting algorithm
 
@@ -251,7 +278,19 @@ Add a separate test case to `test_player.py` to test your custom sorting algorit
 Include your code below:
 
 ```python
-# YOUR CUSTOM Sorting here
+    @classmethod
+    def custom_sort(cls, array: list) -> list:
+        if len(array) <= 1:
+            return array
+        pivot = array[0]
+        left = []
+        right = []
+        for player in array[1:]:
+            if player > pivot:
+                left.append(player)
+            else:
+                right.append(player)
+        return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
 ```
 
 #### 5.2.3. Success criteria

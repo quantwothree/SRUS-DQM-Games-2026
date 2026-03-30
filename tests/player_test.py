@@ -28,6 +28,12 @@ class PlayerTest(unittest.TestCase):
 
         self.assertLess(bob, alice)
 
+    def test_custom_sort(self):
+        players = [Player('01', "Alice", 10), Player('02', "Bob", 5), Player('03', "Charlie", 15)]
+        players_manually_sorted = [Player('03', "Charlie", 15), Player('01', "Alice", 10), Player('02', "Bob", 5)]
+        players_sorted = Player.custom_sort(players)
+        self.assertListEqual(players_sorted, players_manually_sorted)
+
 if __name__ == "__main__":
     unittest.main()
 

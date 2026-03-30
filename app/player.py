@@ -30,8 +30,9 @@ class Player:
     def name(self, new_name: str) -> None:
         self._player_name = new_name
 
+    # Changed from comparing uid to comparing score of Players
     def __eq__(self, other):
-        return self.uid == other.uid
+        return self.score == other.score
 
     @property
     def score(self):
@@ -49,3 +50,18 @@ class Player:
 
     def __lt__(self, other):
         return self.score < other.score
+
+    @classmethod
+    def custom_sort(cls, array: list) -> list:
+        if len(array) <= 1:
+            return array
+        pivot = array[0]
+        left = []
+        right = []
+        for player in array[1:]:
+            if player > pivot:
+                left.append(player)
+            else:
+                right.append(player)
+        return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
+
