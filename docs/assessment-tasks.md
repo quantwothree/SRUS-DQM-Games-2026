@@ -321,7 +321,13 @@ Include your test case below:
 
 ```python
 
-# YOUR TEST CASE HERE
+    def test_custom_sort_with_1000_players(self):
+        players = [Player(f"{i:03}", f"Player {i}", random.randint(0, 1000)) for i in range(1000)]
+        players_manually_sorted = sorted(players, reverse=True)
+        players_sorted = Player.custom_sort(players)
+
+        self.assertListEqual(players_manually_sorted, players_sorted)
+
 
 ```
 

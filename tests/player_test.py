@@ -1,4 +1,4 @@
-import unittest
+import unittest, random
 from app.player import Player
 
 class PlayerTest(unittest.TestCase):
@@ -32,7 +32,16 @@ class PlayerTest(unittest.TestCase):
         players = [Player('01', "Alice", 10), Player('02', "Bob", 5), Player('03', "Charlie", 15)]
         players_manually_sorted = [Player('03', "Charlie", 15), Player('01', "Alice", 10), Player('02', "Bob", 5)]
         players_sorted = Player.custom_sort(players)
+
         self.assertListEqual(players_sorted, players_manually_sorted)
+
+    def test_custom_sort_with_1000_players(self):
+        players = [Player(f"{i:03}", f"Player {i}", random.randint(0, 1000)) for i in range(1000)]
+        players_manually_sorted = sorted(players, reverse=True)
+        players_sorted = Player.custom_sort(players)
+
+        self.assertListEqual(players_manually_sorted, players_sorted)
+
 
 if __name__ == "__main__":
     unittest.main()
