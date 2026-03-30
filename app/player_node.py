@@ -10,20 +10,25 @@ class PlayerNode:
     def player(self) -> Player:
         return self._player
 
+    # Note to self:
+    # Add " " to the PlayerNode type hint
+    # Because we are using it inside its own class definition eg PlayerNode
+    # Python would give NameError if we don't use " "
+
     @property
-    def next(self) -> PlayerNode:
+    def next(self) -> "PlayerNode":
         return self._next
 
     @next.setter
-    def next(self, player_node: PlayerNode) -> None:
+    def next(self, player_node: "PlayerNode") -> None:
         self._next = player_node
 
     @property
-    def previous(self) -> PlayerNode:
+    def previous(self) -> "PlayerNode":
         return self._previous
 
     @previous.setter
-    def previous(self, player_node: PlayerNode) -> None:
+    def previous(self, player_node: "PlayerNode") -> None:
         self._previous = player_node
 
     @property

@@ -1,7 +1,8 @@
 class Player:
-    def __init__(self, unique_id: str, player_name: str) -> None:
+    def __init__(self, unique_id: str, player_name: str, score: int = 0) -> None:
         self._unique_id = unique_id
         self._player_name = player_name
+        self._score = score
 
     @property
     def uid(self) -> str:
@@ -31,3 +32,17 @@ class Player:
 
     def __eq__(self, other):
         return self.uid == other.uid
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, new_score: int):
+        if new_score < 0:
+            raise ValueError("Score needs to be greater than 0")
+        else:
+            self._score = new_score
+
+    def __repr__(self):
+        return f"{self.__class__.__name__} (name= '{self._player_name}', uid= '{self._id}', score= {self._score})"
