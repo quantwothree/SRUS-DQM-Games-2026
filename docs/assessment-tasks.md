@@ -349,7 +349,33 @@ Create a test case that tries to sort 1000 players that are already sorted.
 If you get a failure, include the failure below:
 
 ```text
-YOUR FAILURE HERE
+Ran 7 tests in 0.223s
+
+FAILED (errors=1)
+
+Error
+Traceback (most recent call last):
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\tests\player_test.py", line 53, in test_custom_sort_with_sorted_list
+    players_custom_sorted_sorted_list = Player.custom_sort(players_sorted)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\app\player.py", line 66, in custom_sort
+    return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
+                                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\app\player.py", line 66, in custom_sort
+    return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
+                                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\app\player.py", line 66, in custom_sort
+    return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
+                                             ^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 979 more times]
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\app\player.py", line 62, in custom_sort
+    if player > pivot:
+       ^^^^^^^^^^^^^^
+  File "C:\Users\20136769\Desktop\SRUS-DQM-Games-2026\app\player.py", line 52, in __lt__
+    return self.score < other.score
+           ^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded
+
 ```
 
 ##### 5.3.4.1 Question: Why does the algorithm fail on presorted values?
@@ -358,13 +384,45 @@ Provide a reason why this test failed (if you got a recursion errors, you need t
 
 If your implementation did not fail, you must nevertheless explain why the senior developers algorithm has worse space complexity for presorted values.
 
-> Answer here
+> The reason why this test fail was because with the custom sort the pivot chosen was at the begining of the list. 
+
+Which works fine with a random, unsorted list. 
+
+But with an already sorted list, the custom sort can only sort 1 number per recursion, because the pivot is always greater than the next number in the sorted list (this particular sorted list) 
+
+That means Python needs X number of recursions for X amount of numbers in the list. In this case we need 1000 recursions which is also the limitation of Python -> We have RecursionError. 
+
 
 Propose a fix to your sorting algorithm that fixes this issue.
 
 ```python
-# YOUR FIX HERE
-# Highlight what the fix was
+    @classmethod
+    def custom_sort(cls, array: list) -> list:
+        if len(array) <= 1:
+            return array
+        # Choosing the pivot roughly in the middle of the list
+        pivot_index = round(len(array) / 2)
+        pivot = array[pivot_index]
+
+        # New array with no pivot
+        new_array = array[:pivot_index] + array[pivot_index + 1:]
+        left = []
+        right = []
+
+        for player in new_array:
+            if player > pivot:
+                left.append(player)
+            else:
+                right.append(player)
+        return cls.custom_sort(left) + [pivot] + cls.custom_sort(right)
+
+So the fix was to choose the pivot roughly in the middle of the list instead of the start of the list. 
+
+Therefore for every recursion, we hopefully cut the work in half, making it more sufficient for sorted list in comparison to choosing the pivot at the start of the list. 
+
+This potentially, depends on how 'sorted' the list already is, could require less recursions to finish the sort. 
+
+
 ```
 
 #### 5.3.5. Success criteria
@@ -380,7 +438,7 @@ Propose a fix to your sorting algorithm that fixes this issue.
 Complete the following snippet before you submit:
 
 ```text
-I, <name and student number>, completed this work in class <room number>, on <date>, under the supervision of <assessor's name>.
+I, Dinh Quan Mai, completed this work in class 303, on 30th March 2026, under the supervision of Alex Schmidt. 
 ```
 
 Or (if not completed in class):

@@ -42,6 +42,18 @@ class PlayerTest(unittest.TestCase):
 
         self.assertListEqual(players_manually_sorted, players_sorted)
 
+    def test_custom_sort_with_sorted_list(self):
+        players_unsorted = [Player(f"{i:03}", f"Player {i}", random.randint(0, 1000)) for i in range(1000)]
+        players_sorted = sorted(players_unsorted, reverse=True)
+
+        # Use custom sort on the unsorted list
+        players_custom_sorted_unsorted_list = Player.custom_sort(players_unsorted)
+
+        # Use custom sort on the sorted list
+        players_custom_sorted_sorted_list = Player.custom_sort(players_sorted)
+
+        self.assertListEqual(players_custom_sorted_unsorted_list, players_custom_sorted_sorted_list)
+
 
 if __name__ == "__main__":
     unittest.main()

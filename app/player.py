@@ -55,10 +55,16 @@ class Player:
     def custom_sort(cls, array: list) -> list:
         if len(array) <= 1:
             return array
-        pivot = array[0]
+        # Choosing the pivot roughly in the middle of the list
+        pivot_index = round(len(array) / 2)
+        pivot = array[pivot_index]
+
+        # New array with no pivot
+        new_array = array[:pivot_index] + array[pivot_index + 1:]
         left = []
         right = []
-        for player in array[1:]:
+
+        for player in new_array:
             if player > pivot:
                 left.append(player)
             else:
