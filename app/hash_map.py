@@ -64,7 +64,7 @@ class HashMap:
             count += len(player_list)
         return count
 
-    def display(self):
+    def display(self) -> None:
         for index in range(self.size):
             player_list = self.hashmap[index]
             if player_list.is_empty:

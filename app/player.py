@@ -35,11 +35,11 @@ class Player:
         return self.score == other.score
 
     @property
-    def score(self):
+    def score(self) -> int:
         return self._score
 
     @score.setter
-    def score(self, new_score: int):
+    def score(self, new_score: int) -> None:
         if new_score < 0:
             raise ValueError("Score needs to be greater than 0")
         else:

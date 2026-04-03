@@ -1,7 +1,7 @@
 import unittest, random
 from app.player import Player
 
-class PlayerTest(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
     def test_uid(self):
         player = Player("01", "Alice")
         self.assertEqual(player.uid, "01")

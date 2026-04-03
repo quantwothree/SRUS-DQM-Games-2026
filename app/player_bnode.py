@@ -15,17 +15,17 @@ class PlayerBNode:
         self._player = player
 
     @property
-    def left_bnode(self):
+    def left_bnode(self) -> "PlayerBNode | None":
         return self._left_bnode
 
     @left_bnode.setter
-    def left_bnode(self, bnode) -> None:
+    def left_bnode(self, bnode: "PlayerBNode") -> None:
         self._left_bnode = bnode
 
     @property
-    def right_bnode(self):
+    def right_bnode(self) -> "PlayerBNode | None":
         return self._right_bnode
 
     @right_bnode.setter
-    def right_bnode(self, bnode) -> None:
+    def right_bnode(self, bnode: "PlayerBNode") -> None:
         self._right_bnode = bnode
