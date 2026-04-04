@@ -49,5 +49,25 @@ Question 8:
 
 Answer: 
 
+    Because we pick the middle element of the list as root for the sub-trees, we essentially cut down in half the amount of elements for every recursion. 
+
+    If we start with n elements 
+    After 1 recursion: we have n/2 elements left in each sub-tree
+    After 2 recursion: we have n/4 elements left in each sub-tree
+    After 3 recursion: we have n/8 elements left in each sub-tree
+    And so on 
+
+    So we need to find out how many times can we devide n elements by 2 before we hit 1 element 
+
+    To do that we solve n / (2 ^ x ) = 1, where x is the number of times we can divide
+
+    <=> n = 2 ^ x 
+    => x = log2n 
+
+    Therefore, we need at most log2n steps to find an element in the balanced tree, where n is the number of elements.
+
+
+
+
     
 
